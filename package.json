@@ -21,7 +21,9 @@
     },
     "homepage": "https://github.com/SDE2025-DomoticWebApp/RulesService#readme",
     "dependencies": {
+        "axios": "^1.13.2",
         "better-sqlite3": "^12.5.0",
+        "dotenv": "^17.2.3",
         "express": "^5.2.1"
     },
     "devDependencies": {

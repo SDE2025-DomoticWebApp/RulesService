@@ -25,6 +25,6 @@ app.get('/health', (req, res) => {
 });
 
 // start server
-app.listen(config.PORT, () => {
-    console.log(`Rules Service running on port ${PORT}`);
+app.listen(config.port, () => {
+    console.log(`Rules Service running on port ${config.port}`);
 });

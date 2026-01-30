@@ -34,10 +34,15 @@ class RulesEngineService {
 
         if (!active) return;
 
-        const measuredValue = value[field];
+        let measuredValue;
+        if (value && typeof value === 'object' && field) {
+            measuredValue = value[field];
+        } else if (typeof value === 'number') {
+            measuredValue = value;
+        }
         const operation = this.#operators[operator];
 
-        if (operation && operation(measuredValue, threshold)) {
+        if (operation && measuredValue !== undefined && operation(measuredValue, threshold)) {
             this.ruleSuccessful({ sensorId, measuredValue, operator, threshold, email });
         }
     }

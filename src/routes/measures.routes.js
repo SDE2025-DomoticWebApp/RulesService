@@ -7,9 +7,11 @@ const rulesEngine = require('../services/rulesEngine.service');
 router.post('/', async (req, res) => {
     const { sensorId, value, timestamp } = req.body;
 
-    if (!sensorId || value === undefined || !secret) {
+    if (!sensorId || value === undefined) {
         return res.status(400).json({ error: 'sensorId and value are required' });
     }
+
+    console.log(`[Rules Service] Received measure: received measure for sensor ${sensorId}, value ${value}, ts ${timestamp}`);
 
     try {
         const result = rulesRepo.retrieveRules(sensorId);
