@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const config = require('./config/config');
 
 // initialize express
 const app = express();
@@ -24,7 +25,6 @@ app.get('/health', (req, res) => {
 });
 
 // start server
-const PORT = process.env.PORT || 3011;
-app.listen(PORT, () => {
+app.listen(config.PORT, () => {
     console.log(`Rules Service running on port ${PORT}`);
 });
