@@ -1,0 +1,1 @@
+This service is responsible for storing and verifying user defined rules. When a sensor pushes a measure to the Internal Data Adapter, this measure is forwarded to RulesService, which checks whether any of the user defined rules apply for the received measure. 
