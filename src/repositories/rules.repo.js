@@ -25,7 +25,34 @@ function retrieveRules(sensorId) {
         .all(sensorId);
 }
 
+/**
+ * Get all rules for a user
+ */
+function retrieveRulesByEmail(email) {
+    return db
+        .prepare(`
+      SELECT * FROM rules
+      WHERE email = ?
+    `)
+        .all(email);
+}
+
+/**
+ * Update rule active status
+ */
+function updateRuleActive(ruleId, email, active) {
+    const stmt = db.prepare(`
+      UPDATE rules
+      SET active = ?
+      WHERE id = ? AND email = ?
+    `);
+
+    return stmt.run(active, ruleId, email);
+}
+
 module.exports = {
     addRule,
-    retrieveRules
+    retrieveRules,
+    retrieveRulesByEmail,
+    updateRuleActive
 };

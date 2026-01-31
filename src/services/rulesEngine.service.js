@@ -34,12 +34,9 @@ class RulesEngineService {
 
         if (!active) return;
 
-        let measuredValue;
-        if (value && typeof value === 'object' && field) {
-            measuredValue = value[field];
-        } else if (typeof value === 'number') {
-            measuredValue = value;
-        }
+        if (!value || typeof value !== 'object' || Array.isArray(value)) return;
+
+        const measuredValue = value[field];
         const operation = this.#operators[operator];
 
         if (operation && measuredValue !== undefined && operation(measuredValue, threshold)) {
@@ -47,8 +44,8 @@ class RulesEngineService {
         }
     }
 
-    ruleSuccessful(sensorId, criticalValue, operator, threshold, email) {
-        notificationClient.notify(sensorId, criticalValue, operator, threshold, email);
+    ruleSuccessful(notificationData) {
+        notificationClient.notify(notificationData);
     }
 }
 

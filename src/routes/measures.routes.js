@@ -11,10 +11,19 @@ router.post('/', async (req, res) => {
         return res.status(400).json({ error: 'sensorId and value are required' });
     }
 
-    console.log(`[Rules Service] Received measure: received measure for sensor ${sensorId}, value ${value}, ts ${timestamp}`);
+    if (!value || typeof value !== 'object' || Array.isArray(value)) {
+        return res.status(400).json({ error: 'value must be an object' });
+    }
+
+    console.log(`[Rules Service] Received measure for sensor ${sensorId}, value ${JSON.stringify(value)}, ts ${timestamp}`);
 
     try {
         const result = rulesRepo.retrieveRules(sensorId);
+        for (const rule of result) {
+            if (rule.active && rule.field && !Object.prototype.hasOwnProperty.call(value, rule.field)) {
+                return res.status(400).json({ error: `value missing required field "${rule.field}"` });
+            }
+        }
         if (result.length > 0) {
             rulesEngine.processMeasures(req.body, result);
         }

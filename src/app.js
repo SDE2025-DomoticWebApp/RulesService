@@ -15,9 +15,11 @@ const schemaPath = path.join(__dirname, 'db/schema.sql');
 const schema = fs.readFileSync(schemaPath, 'utf8');
 db.exec(schema);
 
+const authMiddleware = require('./middleware/auth.middleware');
+
 // register routes
 app.use('/measures', require('./routes/measures.routes'));
-app.use('/rules', require('./routes/rules.routes'));
+app.use('/rules', authMiddleware, require('./routes/rules.routes'));
 
 // health check endpoint (optional but useful)
 app.get('/health', (req, res) => {
