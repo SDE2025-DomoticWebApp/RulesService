@@ -26,7 +26,7 @@ class NotificationClient {
      */
     async notify(notificationData) {
         try {
-            const response = await this.client.post(notificationData);
+            const response = await this.client.post('/notify', notificationData);
             return response.data;
         } catch (error) {
             if (error.response) {

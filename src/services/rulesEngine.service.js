@@ -40,12 +40,19 @@ class RulesEngineService {
         const operation = this.#operators[operator];
 
         if (operation && measuredValue !== undefined && operation(measuredValue, threshold)) {
-            this.ruleSuccessful({ sensorId, measuredValue, operator, threshold, email });
+            await this.ruleSuccessful({
+                sensorId,
+                criticalValue: measuredValue,
+                operator,
+                threshold,
+                email
+            });
         }
     }
 
-    ruleSuccessful(notificationData) {
-        notificationClient.notify(notificationData);
+    async ruleSuccessful(notificationData) {
+        console.log("Rule was deemed succesful");
+        await notificationClient.notify(notificationData);
     }
 }
 
