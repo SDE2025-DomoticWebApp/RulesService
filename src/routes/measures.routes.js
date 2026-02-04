@@ -5,7 +5,7 @@ const rulesEngine = require('../services/rulesEngine.service');
 
 // POST /measures
 router.post('/', async (req, res) => {
-    const { sensorId, value, timestamp } = req.body;
+    const { sensorId, value, timestamp, isExternal = false } = req.body;
 
     if (!sensorId || value === undefined) {
         return res.status(400).json({ error: 'sensorId and value are required' });

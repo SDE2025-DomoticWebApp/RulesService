@@ -5,7 +5,7 @@ const internalDataAdapterClient = require('../clients/internalDataAdapter.client
 
 // POST /rules
 router.post('/', async (req, res) => {
-    const { email, sensorId, operator, threshold, field, active } = req.body;
+    const { email, sensorId, operator, threshold, field, active, isExternal = false } = req.body;
 
     if (!email || !sensorId || !operator || threshold === undefined || !field || active === undefined) {
         return res.status(400).json({ error: 'All fields are required' });
@@ -25,13 +25,16 @@ router.post('/', async (req, res) => {
     }
 
     try {
-        const sensor = await internalDataAdapterClient.getSensorById(sensorId);
-        if (!sensor) {
-            return res.status(404).json({ error: 'Sensor not found' });
-        }
+        if (isExternal === false) {
 
-        if (sensor.user_email !== email) {
-            return res.status(403).json({ error: 'User does not own sensor' });
+            const sensor = await internalDataAdapterClient.getSensorById(sensorId);
+            if (!sensor) {
+                return res.status(404).json({ error: 'Sensor not found' });
+            }
+
+            if (sensor.user_email !== email) {
+                return res.status(403).json({ error: 'User does not own sensor' });
+            }
         }
 
         const result = rulesRepo.addRule(email, sensorId, operator, threshold, field, active);
