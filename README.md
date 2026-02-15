@@ -7,7 +7,7 @@ Stores user-defined rules and evaluates incoming measures. Triggers notification
 
 ## Configuration
 
-`.env`
+Create `.env` from `.env.example`:
 ```
 PORT=3012
 NOTIFICATION_SERVICE_URL=http://localhost:3013
@@ -33,6 +33,11 @@ Enable/disable a rule (JWT required).
 
 ### `GET /health`
 Service health check.
+
+## Capabilities
+- Stores rules per user/sensor
+- Evaluates incoming measures (internal + external)
+- Triggers notifications when rules match
 
 ## Run
 ```
