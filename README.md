@@ -34,6 +34,31 @@ Enable/disable a rule (JWT required).
 ### `GET /health`
 Service health check.
 
+
+## JSON Examples
+
+### `POST /measures`
+```json
+{
+  "sensorId": 3,
+  "value": { "temperature": 21.4 },
+  "timestamp": "2026-02-18T12:00:00Z",
+  "isExternal": false
+}
+```
+
+### `POST /rules`
+```json
+{
+  "email": "user@example.com",
+  "sensorId": 3,
+  "operator": ">",
+  "threshold": 25,
+  "field": "temperature",
+  "active": 1
+}
+```
+
 ## Capabilities
 - Stores rules per user/sensor
 - Evaluates incoming measures (internal + external)
